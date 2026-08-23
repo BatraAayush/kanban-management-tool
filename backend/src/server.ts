@@ -8,6 +8,8 @@ import { ErrorHandler } from "./middleware/errorHandler.js";
 import authRoutes from "../src/routes/auth.routes.js";
 import projectRoutes from "../src/routes/project.routes.js";
 import taskRoutes from "../src/routes/task.routes.js";
+import { swaggerDocument } from "./config/swagger.js";
+import swaggerUi from 'swagger-ui-express';
 
 dotenv.config();
 
@@ -24,7 +26,7 @@ app.use(
     credentials: true,
   }),
 );
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/projects", projectRoutes);
 app.use("/api/v1/projects/:projectId/tasks", taskRoutes);
